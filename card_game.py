@@ -44,13 +44,16 @@ def take_turn(player1_hand, player2_hand):
         table.append(player2_card)
         # if player1 card > player2 card: player 1 collects all cards
         if player1_card > player2_card:
+            print("Player 1 takes the cards")
             player1_hand.append(table)
             round_over = True
         # elif player2 card > player1 card: player2  collects all cards
         elif player2_card > player1_card:
+            print("Player 2 takes the cards")
             player2_hand.append(table)
             round_over = True
-        # else: nothing
+        else:
+            print("Tie, flip cards again")
         
     
 
@@ -68,6 +71,8 @@ def play_game():
     player1_hand, player2_hand = deal_cards(deck)
     print("Player 1:", player1_hand)
     print("Player 2:", player2_hand)
-    # repeat flip_and_compare until we run out of cards
+    # repeat flip_and_compare until one player runs out of cards
+    while len(player1_hand) > 0 and len(player2_hand) > 0:
+        take_turn(player1_hand, player2_hand)
 
 play_game()
