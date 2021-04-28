@@ -1,5 +1,7 @@
+import random
+
 ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
-suits = ["♣️", "♦️", "♥️", "♠️"]
+suits = ["🔥", "💧", "🌪", "🌈"]
 
 
 class Deck:
@@ -8,8 +10,10 @@ class Deck:
         for rank in ranks:
             for suit in suits:
                 card = Card(rank, suit)
-                print(card)
                 self.cards.append(card)
+
+    def shuffle(self):
+        random.shuffle(self.cards)
 
 
 class Card:
@@ -23,8 +27,34 @@ class Card:
 
 class Player:
     # dealer will be a type of player
-    pass
+    def __init__(self, name, is_dealer):
+        self.name = name
+        self.is_dealer = is_dealer
+        self.hand = []
+
+    def __str__(self):
+        if self.is_dealer == True:
+            return 'Dealer'
+        else:
+            return f"{self.name}"
 
 
-deck = Deck(ranks, suits)
-breakpoint()
+class Game:
+    def __init__(self, player_name, dealer_name):
+        self.deck = Deck(ranks, suits)
+        self.deck.shuffle()
+        self.player = Player(player_name, False)
+        self.dealer = Player(dealer_name, True)
+        self.player.hand.append(self.deck.cards.pop())
+        self.dealer.hand.append(self.deck.cards.pop())
+        self.player.hand.append(self.deck.cards.pop())
+        self.dealer.hand.append(self.deck.cards.pop())
+
+game = Game("Rusty Ryan", "Tracy")
+
+print(game.player)
+for card in game.player.hand:
+    print(card)
+print(game.dealer)
+for card in game.dealer.hand:
+    print(card)
